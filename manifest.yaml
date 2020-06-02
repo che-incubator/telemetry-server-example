@@ -38,7 +38,7 @@ metadata:
   name: che-workspace-telemetry-example
 spec:
   rules:
-  - host: che-workspace-telemetry-example-che.apps-crc.testing
+  - host: REPLACE HOST
     http:
       paths:
       - backend:
