@@ -1,0 +1,46 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: che-workspace-telemetry-example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: che-workspace-telemetry-example
+  template:
+    metadata:
+      labels:
+        app: che-workspace-telemetry-example
+    spec:
+      containers:
+        - name: telemetry-backend
+          image: 'REPLACE IMAGE'
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          imagePullPolicy: Always
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: che-workspace-telemetry-example
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  selector:
+    app: che-workspace-telemetry-example
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1beta1
+metadata:
+  name: che-workspace-telemetry-example
+spec:
+  rules:
+  - host: che-workspace-telemetry-example-che.apps-crc.testing
+    http:
+      paths:
+      - backend:
+          serviceName: che-workspace-telemetry-example
+          servicePort: 80
